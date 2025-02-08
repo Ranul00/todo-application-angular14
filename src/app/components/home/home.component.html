@@ -1,5 +1,8 @@
-<div class="container w-100 d-flex justify-content-between align-items-center">
-  <app-add-task></app-add-task>
-  <mat-divider vertical></mat-divider>
-  <app-task-list></app-task-list>
+<div class="container w-100">
+  <app-add-task (addTask)="onAddTask($event)"></app-add-task>
+  <mat-divider vertical class="divider mx-4"></mat-divider>
+  <app-task-list
+    [addedTasks]="addedTasks"
+    (markAction)="onMarkAction($event)"
+  ></app-task-list>
 </div>

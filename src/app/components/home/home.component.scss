@@ -1,3 +1,16 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 991px) {
+  .divider {
+    display: none;
+  }
+}
+
 :host ::ng-deep mat-divider {
   height: 50%;
 }

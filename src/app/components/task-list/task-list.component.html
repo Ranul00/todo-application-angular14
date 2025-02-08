@@ -1,1 +1,47 @@
-<p>task-list works!</p>
+<div class="task-container">
+  <div class="todo-list">
+    <mat-card class="my-2 card" *ngFor="let item of addedTasks">
+      <button
+        mat-icon-button
+        class="delete-button"
+        matTooltip="Remove Tasks"
+        (click)="onClickDelete(item)"
+      >
+        <mat-icon>remove_circle</mat-icon>
+      </button>
+
+      <mat-card-content>
+        <div class="content">
+          <div class="text">
+            <span class="title">{{ item.title }}</span>
+            <span
+              class="description"
+              [ngClass]="{
+                clamped: !item.showFullText,
+                expanded: item.showFullText
+              }"
+              >{{ item.description }}</span
+            >
+            <button
+              class="show-more-btn"
+              mat-flat-button
+              *ngIf="item.description.length > 100"
+              (click)="toggleText(item)"
+            >
+              {{ item.showFullText ? "Show Less" : "Show More" }}
+            </button>
+          </div>
+          <div class="button">
+            <button
+              mat-icon-button
+              matTooltip="Mark as Done!"
+              (click)="onClickDone(item)"
+            >
+              <mat-icon>check_circle_outline</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

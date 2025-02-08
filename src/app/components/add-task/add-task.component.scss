@@ -1,0 +1,19 @@
+.card-container {
+  box-shadow: none;
+  border: 1px solid #e0e0e0;
+  border-radius: 25px;
+  .content {
+    margin: 5%;
+  }
+
+  button {
+    border-radius: 25px;
+  }
+}
+
+:host
+  ::ng-deep
+  .mat-form-field-appearance-outline
+  .mat-form-field-outline-start {
+  border-radius: 25px;
+}
