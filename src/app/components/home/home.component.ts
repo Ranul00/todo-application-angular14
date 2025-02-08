@@ -20,7 +20,7 @@ export class HomeComponent implements OnInit {
       ...event,
       status: TASK_STATUS.PENDING,
     };
-    this.addedTasks = [...this.addedTasks, newTask];
+    this.addedTasks.unshift(newTask);
   }
 
   onMarkAction(event: { action: TASK_ACTION; taskId: string }) {

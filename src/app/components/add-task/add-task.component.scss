@@ -6,6 +6,10 @@
     margin: 5%;
   }
 
+  @media (max-width: 991px) {
+    margin-bottom: 3%;
+  }
+
   button {
     border-radius: 25px;
   }

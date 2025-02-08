@@ -1,8 +1,12 @@
 <div class="container w-100">
-  <app-add-task (addTask)="onAddTask($event)"></app-add-task>
-  <mat-divider vertical class="divider mx-4"></mat-divider>
-  <app-task-list
-    [addedTasks]="addedTasks"
-    (markAction)="onMarkAction($event)"
-  ></app-task-list>
+  <h1>Manage TODO's</h1>
+
+  <div class="content">
+    <app-add-task (addTask)="onAddTask($event)"></app-add-task>
+    <mat-divider vertical class="divider mx-4"></mat-divider>
+    <app-task-list
+      [addedTasks]="addedTasks"
+      (markAction)="onMarkAction($event)"
+    ></app-task-list>
+  </div>
 </div>
