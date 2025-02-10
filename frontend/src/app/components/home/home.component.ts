@@ -28,6 +28,9 @@ export class HomeComponent implements OnInit {
     this.taskService.addTask(event.title, event.description).subscribe({
       next: (res) => {
         this.addedTasks.unshift(res);
+        if (this.addedTasks.length > 5) {
+          this.addedTasks.splice(this.addedTasks.length - 1, 1);
+        }
       },
       error: () => {
         console.log('failed to load tasks');
@@ -42,20 +45,20 @@ export class HomeComponent implements OnInit {
     if (foundIndex !== -1) {
       switch (event.action) {
         case TASK_ACTION.COMPLETE:
-          this.markAsComplete(event.taskId, foundIndex);
+          this.markAsComplete(event.taskId);
           break;
         case TASK_ACTION.DELETE:
-          this.deleteTask(event.taskId, foundIndex);
+          this.deleteTask(event.taskId);
           break;
       }
     }
   }
 
-  markAsComplete(taskId: string | number, foundIndex: number) {
+  markAsComplete(taskId: string | number) {
     this.taskService.markComplete(taskId).subscribe({
       next: (res) => {
         if (res) {
-          this.removeTaskFromTheAddedTasks(foundIndex);
+          this.addedTasks = [...res.data];
         }
       },
       error: (err) => {
@@ -64,20 +67,16 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  deleteTask(taskId: string | number, foundIndex: number) {
+  deleteTask(taskId: string | number) {
     this.taskService.markDelete(taskId).subscribe({
       next: (res) => {
         if (res) {
-          this.removeTaskFromTheAddedTasks(foundIndex);
+          this.addedTasks = [...res.data];
         }
       },
       error: (err) => {
         console.log(err);
       },
     });
-  }
-
-  removeTaskFromTheAddedTasks(foundIndex: number) {
-    this.addedTasks.splice(foundIndex, 1);
   }
 }

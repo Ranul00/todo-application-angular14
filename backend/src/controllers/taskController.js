@@ -45,7 +45,18 @@ exports.markComplete = async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    res.json({ message: "Task marked as completed" });
+    const lastIncompleteTasks = await Task.findAll({
+      where: {
+        status: false,
+      },
+      order: [["id", "DESC"]],
+      limit: 5,
+    });
+
+    res.json({
+      message: "Task marked as completed",
+      data: lastIncompleteTasks,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error updating task",
@@ -56,7 +67,6 @@ exports.markComplete = async (req, res) => {
 
 exports.deleteTask = async (req, res) => {
   try {
-    console.log(req.params.id);
     const deleted = await Task.destroy({
       where: { id: req.params.id },
     });
@@ -65,7 +75,18 @@ exports.deleteTask = async (req, res) => {
       return res.status(404).json({ message: "Task not found" });
     }
 
-    res.json({ message: "Task deleted successfully" });
+    const lastIncompleteTasks = await Task.findAll({
+      where: {
+        status: false,
+      },
+      order: [["id", "DESC"]],
+      limit: 5,
+    });
+
+    res.json({
+      message: "Task deleted successfully",
+      data: lastIncompleteTasks,
+    });
   } catch (error) {
     res.status(500).json({
       message: "Error deleting task",
