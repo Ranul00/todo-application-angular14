@@ -16,8 +16,10 @@ import { ITask } from 'src/app/models/task.model';
 })
 export class TaskListComponent implements OnChanges {
   @Input() addedTasks: (ITask & { showFullText?: boolean })[] = [];
-  @Output() markAction: EventEmitter<{ action: TASK_ACTION; taskId: string }> =
-    new EventEmitter();
+  @Output() markAction: EventEmitter<{
+    action: TASK_ACTION;
+    taskId: number;
+  }> = new EventEmitter();
 
   constructor() {}
 
@@ -34,14 +36,14 @@ export class TaskListComponent implements OnChanges {
   onClickDone(task: ITask) {
     this.markAction.emit({
       action: TASK_ACTION.COMPLETE,
-      taskId: task.taskId,
+      taskId: task.id,
     });
   }
 
   onClickDelete(task: ITask) {
     this.markAction.emit({
       action: TASK_ACTION.DELETE,
-      taskId: task.taskId,
+      taskId: task.id,
     });
   }
 }

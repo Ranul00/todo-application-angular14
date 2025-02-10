@@ -8,7 +8,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class AddTaskComponent implements OnInit {
   @Output() addTask: EventEmitter<{
-    taskId: string;
     title: string;
     description: string;
   }> = new EventEmitter();
@@ -24,14 +23,11 @@ export class AddTaskComponent implements OnInit {
   onAddTask() {
     if (this.addTaskFormGroup.valid) {
       this.addTask.emit({
-        taskId: this.generateTaskId(),
         title: this.addTaskFormGroup.controls.title.value || '',
         description: this.addTaskFormGroup.controls.description.value || '',
       });
-    }
-  }
 
-  generateTaskId(): string {
-    return `taskId-${Date.now()}`;
+      this.addTaskFormGroup.reset();
+    }
   }
 }

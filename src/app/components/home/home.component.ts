@@ -1,6 +1,6 @@
+import { TaskService } from './../../services/task.service';
 import { TASK_ACTION } from './../../models/task.enum';
 import { Component, OnInit } from '@angular/core';
-import { TASK_STATUS } from 'src/app/models/task.enum';
 import { ITask } from 'src/app/models/task.model';
 
 @Component({
@@ -9,34 +9,72 @@ import { ITask } from 'src/app/models/task.model';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-  constructor() {}
+  constructor(private taskService: TaskService) {}
 
   addedTasks: ITask[] = [];
 
-  ngOnInit(): void {}
-
-  onAddTask(event: { taskId: string; title: string; description: string }) {
-    const newTask: ITask = {
-      ...event,
-      status: TASK_STATUS.PENDING,
-    };
-    this.addedTasks.unshift(newTask);
+  ngOnInit(): void {
+    this.taskService.getTasks().subscribe({
+      next: (res) => {
+        this.addedTasks = [...res];
+      },
+      error: () => {
+        console.log('failed to load tasks');
+      },
+    });
   }
 
-  onMarkAction(event: { action: TASK_ACTION; taskId: string }) {
+  onAddTask(event: { title: string; description: string }) {
+    this.taskService.addTask(event.title, event.description).subscribe({
+      next: (res) => {
+        this.addedTasks.unshift(res);
+      },
+      error: () => {
+        console.log('failed to load tasks');
+      },
+    });
+  }
+
+  onMarkAction(event: { action: TASK_ACTION; taskId: string | number }) {
     const foundIndex = this.addedTasks.findIndex(
-      (item) => item.taskId === event.taskId
+      (item) => item.id === event.taskId
     );
     if (foundIndex !== -1) {
       switch (event.action) {
         case TASK_ACTION.COMPLETE:
-          this.removeTaskFromTheAddedTasks(foundIndex);
+          this.markAsComplete(event.taskId, foundIndex);
           break;
         case TASK_ACTION.DELETE:
-          this.removeTaskFromTheAddedTasks(foundIndex);
+          this.deleteTask(event.taskId, foundIndex);
           break;
       }
     }
+  }
+
+  markAsComplete(taskId: string | number, foundIndex: number) {
+    this.taskService.markComplete(taskId).subscribe({
+      next: (res) => {
+        if (res) {
+          this.removeTaskFromTheAddedTasks(foundIndex);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
+  }
+
+  deleteTask(taskId: string | number, foundIndex: number) {
+    this.taskService.markDelete(taskId).subscribe({
+      next: (res) => {
+        if (res) {
+          this.removeTaskFromTheAddedTasks(foundIndex);
+        }
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   removeTaskFromTheAddedTasks(foundIndex: number) {
