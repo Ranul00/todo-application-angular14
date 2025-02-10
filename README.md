@@ -1,27 +1,18 @@
-# TodoTaskManager
+# Todo Task Application
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.2.13.
+A full stack todo application built using Angular, Nodejs, Express, MySQL and dockerized using Docker Compose
 
-## Development server
+1. Clone the repository
+   -git clone https://github.com/Ranul00/todo-application-angular14.git
+   -cd todo-application-angular14
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+2. Runt the application with Docker compose
+   -docker-compose up --build
+   -this will build and start the frontend(port 80), backend(port 3000) and MySQL db(port 3307)
 
-## Code scaffolding
+3. Open the application
+   -Frontend -> http://localhost open this in your browser
+   -Backend -> this can be accessible in http://localhost:300
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+4. Stop the application
+   -docker-compose down -v
