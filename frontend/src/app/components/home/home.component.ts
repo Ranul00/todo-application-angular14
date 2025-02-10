@@ -1,5 +1,5 @@
-import { TaskService } from './../../services/task.service';
-import { TASK_ACTION } from './../../models/task.enum';
+import { TaskService } from '../../services/task.service';
+import { TASK_ACTION } from '../../models/task.enum';
 import { Component, OnInit } from '@angular/core';
 import { ITask } from 'src/app/models/task.model';
 
