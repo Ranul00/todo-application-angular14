@@ -1,11 +1,4 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { TASK_ACTION } from 'src/app/models/task.enum';
 import { ITask } from 'src/app/models/task.model';
 
@@ -14,7 +7,7 @@ import { ITask } from 'src/app/models/task.model';
   templateUrl: './task-list.component.html',
   styleUrls: ['./task-list.component.scss'],
 })
-export class TaskListComponent implements OnChanges {
+export class TaskListComponent {
   @Input() addedTasks: (ITask & { showFullText?: boolean })[] = [];
   @Output() markAction: EventEmitter<{
     action: TASK_ACTION;
@@ -22,12 +15,6 @@ export class TaskListComponent implements OnChanges {
   }> = new EventEmitter();
 
   constructor() {}
-
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes?.['addedTasks']?.currentValue) {
-      console.log('changes');
-    }
-  }
 
   toggleText(item: ITask & { showFullText?: boolean }) {
     item.showFullText = !item.showFullText;
